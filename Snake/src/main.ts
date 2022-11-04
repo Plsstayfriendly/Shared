@@ -67,7 +67,7 @@ const _app = new p5(p5Instance => {
   //Score
   let coin_item = 0
 
-  //Variablen Klassen Install p5 Contributor Library
+  //Variablen Klassen
   let obstacles: Obstacle[] = []
 
   let maintheme;
