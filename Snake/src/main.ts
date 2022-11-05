@@ -1,7 +1,7 @@
 import p5 from "p5";
 import "./style.css";
 
-import "K:/Bentiks Dateien/Coding/Shared/Snake/node_modules/p5/lib/p5.js";
+//import "K:/Bentiks Dateien/Coding/Shared/Snake/node_modules/p5/lib/p5.js";
 
 window.p5 = p5;
 
@@ -55,8 +55,7 @@ class Obstacle {
   }
 }
 
-const _app = new p5(p5Instance => {
-  const p = p5Instance as unknown as p5;
+const instance = new p5((p) => {
 
   //Player
   let Player_Width = 90
@@ -81,9 +80,13 @@ const _app = new p5(p5Instance => {
   let loopDuration = 3
 
   //Preload
-  p.preload = function preload(){
-    p.loadSound("src/maintheme.mp3")
-  }
+  p.preload = () => {
+
+    p.loadSound("src/maintheme.mp3", (res) => {
+    
+    console.log(res)
+    
+    });
 
   //maintheme.play()
 
@@ -214,7 +217,8 @@ const _app = new p5(p5Instance => {
       }
     }
   }
-}, document.getElementById("app")!);
+}
+})
 
 
 /*
