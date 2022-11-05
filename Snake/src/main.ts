@@ -1,6 +1,12 @@
 import p5 from "p5";
 import "./style.css";
 
+import "K:/Bentiks Dateien/Coding/Shared/Snake/node_modules/p5/lib/p5.js";
+
+window.p5 = p5;
+
+import "K:/Bentiks Dateien/Coding/Shared/Snake/node_modules/p5/lib/addons/p5.sound.js";
+
 import { Coin } from "./coins"
 import { coins } from "./coins"
 import { Health } from "./health"
@@ -74,13 +80,12 @@ const _app = new p5(p5Instance => {
   let loopStart = 0
   let loopDuration = 3
 
-  maintheme = window.loadSound("src/maintheme.mp3")
-  maintheme.play()
-
   //Preload
-  /*p.preload = function preload(){
-    
-  }*/
+  p.preload = function preload(){
+    p.loadSound("src/maintheme.mp3")
+  }
+
+  //maintheme.play()
 
   //Background  
   p.setup = function setup() {
@@ -210,3 +215,28 @@ const _app = new p5(p5Instance => {
     }
   }
 }, document.getElementById("app")!);
+
+
+/*
+
+import '../node_modules/p5/lib/p5.js';
+
+window.p5 = p5;
+
+import '../node_modules/p5/lib/addons/p5.sound.js';
+
+const instance = new p5((p) => {
+
+p.preload = () => {
+
+p.loadSound('./melodietest2.mp3', (res) => {
+
+console.log(res)
+
+});
+
+}
+
+});
+
+*/
