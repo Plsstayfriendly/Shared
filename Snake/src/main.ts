@@ -1,7 +1,7 @@
-import p5 from "p5";
+//import p5 from "p5";
 import "./style.css";
 
-//import "K:/Bentiks Dateien/Coding/Shared/Snake/node_modules/p5/lib/p5.js";
+import "K:/Bentiks Dateien/Coding/Shared/Snake/node_modules/p5/lib/p5.js";
 
 window.p5 = p5;
 
@@ -82,13 +82,13 @@ const instance = new p5((p) => {
   //Preload
   p.preload = () => {
 
-    p.loadSound("src/maintheme.mp3", (res) => {
+    maintheme = p.loadSound("src/maintheme.mp3", (res) => {
     
     console.log(res)
-    
+    maintheme.loop()
+        
     });
 
-  //maintheme.play()
 
   //Background  
   p.setup = function setup() {
