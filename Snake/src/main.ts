@@ -1,11 +1,11 @@
 //import p5 from "p5";
 import "./style.css";
 
-import "K:/Bentiks Dateien/Coding/Shared/Snake/node_modules/p5/lib/p5.js";
+import "../node_modules/p5/lib/p5.js";
 
 window.p5 = p5;
 
-import "K:/Bentiks Dateien/Coding/Shared/Snake/node_modules/p5/lib/addons/p5.sound.js";
+import "../node_modules/p5/lib/addons/p5.sound.js";
 
 import { Coin } from "./coins"
 import { coins } from "./coins"
@@ -89,10 +89,51 @@ const instance = new p5((p) => {
 
     //Background  
     p.setup = function setup() {
-      p.frameRate(60)
-      p.createCanvas(p.windowWidth, p.windowHeight)
+      p.frameRate(60);
+      p.createCanvas(p.windowWidth, p.windowHeight);
+      reset();
     }
 
+    function reset(){
+
+      //reset all variables
+      Player_Position_Horizontal = p.windowWidth / 2 - Player_Width / 2;
+      Player_Position_Vertical = p.windowHeight / 2 - Player_height / 2;
+      lives = 3;
+      speed = 6;
+      up = false;
+      space = false;
+      coin_item = 0;
+      loopStart = 0;
+      loopDuration = 3;
+      soundvalue = 0;
+      time = 0;
+
+      //remove all existing obstacles,coins,healthpacks by settings array length to 0
+      obstacles.length = 0;
+      coins.length = 0;
+      healthpack.length = 0;
+
+      //generate obstacles,coins,healthpack
+      obstacles.push(new Obstacle(p.windowWidth + 50, p.windowWidth + 300, p.windowHeight - 100, 0, 35, 35, p.random(5, 11), 0, 0))
+      obstacles.push(new Obstacle(p.windowWidth + 50, p.windowWidth + 300, p.windowHeight - 100, 0, 35, 35, p.random(5, 11), 0, 0))
+      obstacles.push(new Obstacle(p.windowWidth + 50, p.windowWidth + 300, p.windowHeight - 100, 0, 35, 35, p.random(5, 11), 0, 0))
+      obstacles.push(new Obstacle(p.windowWidth + 50, p.windowWidth + 300, p.windowHeight - 100, 0, 35, 35, p.random(5, 11), 0, 0))
+      obstacles.push(new Obstacle(p.windowWidth + 50, p.windowWidth + 300, p.windowHeight - 100, 0, 35, 35, p.random(5, 11), 0, 0))
+      obstacles.push(new Obstacle(p.windowWidth + 50, p.windowWidth + 300, p.windowHeight - 100, 0, 35, 35, p.random(5, 11), 0, 0))
+      obstacles.push(new Obstacle(p.windowWidth + 50, p.windowWidth + 300, p.windowHeight - 100, 0, 35, 35, p.random(5, 11), 0, 0))
+      obstacles.push(new Obstacle(p.windowWidth + 50, p.windowWidth + 300, p.windowHeight - 100, 0, 35, 35, p.random(5, 11), 0, 0))
+      obstacles.push(new Obstacle(p.windowWidth + 50, p.windowWidth + 300, p.windowHeight - 100, 0, 35, 35, p.random(5, 11), 0, 0))
+      obstacles.push(new Obstacle(p.windowWidth + 50, p.windowWidth + 300, p.windowHeight - 100, 0, 35, 35, p.random(5, 11), 0, 0))
+      obstacles.push(new Obstacle(p.windowWidth + 50, p.windowWidth + 300, p.windowHeight - 100, 0, 35, 35, p.random(5, 11), 0, 0))
+
+      coins.push(new Coin(p.windowWidth + 50, p.windowWidth + 200, p.windowHeight - 100, 0, 35, 35, p.random(5, 11), 0, 0))
+      coins.push(new Coin(p.windowWidth + 50, p.windowWidth + 200, p.windowHeight - 100, 0, 35, 35, p.random(5, 11), 0, 0))
+      coins.push(new Coin(p.windowWidth + 50, p.windowWidth + 200, p.windowHeight - 100, 0, 35, 35, p.random(5, 11), 0, 0))
+      coins.push(new Coin(p.windowWidth + 50, p.windowWidth + 200, p.windowHeight - 100, 0, 35, 35, p.random(5, 11), 0, 0))
+
+      healthpack.push(new Health(p.windowWidth + 50, p.windowWidth + 200, p.windowHeight - 100, 0, 35, 35, p.random(5, 11), 0, 0))
+    }
 
 
     //Keys
@@ -116,24 +157,6 @@ const instance = new p5((p) => {
       }
     }
 
-    obstacles.push(new Obstacle(p.windowWidth + 50, p.windowWidth + 300, p.windowHeight - 100, 0, 35, 35, p.random(5, 11), 0, 0))
-    obstacles.push(new Obstacle(p.windowWidth + 50, p.windowWidth + 300, p.windowHeight - 100, 0, 35, 35, p.random(5, 11), 0, 0))
-    obstacles.push(new Obstacle(p.windowWidth + 50, p.windowWidth + 300, p.windowHeight - 100, 0, 35, 35, p.random(5, 11), 0, 0))
-    obstacles.push(new Obstacle(p.windowWidth + 50, p.windowWidth + 300, p.windowHeight - 100, 0, 35, 35, p.random(5, 11), 0, 0))
-    obstacles.push(new Obstacle(p.windowWidth + 50, p.windowWidth + 300, p.windowHeight - 100, 0, 35, 35, p.random(5, 11), 0, 0))
-    obstacles.push(new Obstacle(p.windowWidth + 50, p.windowWidth + 300, p.windowHeight - 100, 0, 35, 35, p.random(5, 11), 0, 0))
-    obstacles.push(new Obstacle(p.windowWidth + 50, p.windowWidth + 300, p.windowHeight - 100, 0, 35, 35, p.random(5, 11), 0, 0))
-    obstacles.push(new Obstacle(p.windowWidth + 50, p.windowWidth + 300, p.windowHeight - 100, 0, 35, 35, p.random(5, 11), 0, 0))
-    obstacles.push(new Obstacle(p.windowWidth + 50, p.windowWidth + 300, p.windowHeight - 100, 0, 35, 35, p.random(5, 11), 0, 0))
-    obstacles.push(new Obstacle(p.windowWidth + 50, p.windowWidth + 300, p.windowHeight - 100, 0, 35, 35, p.random(5, 11), 0, 0))
-    obstacles.push(new Obstacle(p.windowWidth + 50, p.windowWidth + 300, p.windowHeight - 100, 0, 35, 35, p.random(5, 11), 0, 0))
-
-    coins.push(new Coin(p.windowWidth + 50, p.windowWidth + 200, p.windowHeight - 100, 0, 35, 35, p.random(5, 11), 0, 0))
-    coins.push(new Coin(p.windowWidth + 50, p.windowWidth + 200, p.windowHeight - 100, 0, 35, 35, p.random(5, 11), 0, 0))
-    coins.push(new Coin(p.windowWidth + 50, p.windowWidth + 200, p.windowHeight - 100, 0, 35, 35, p.random(5, 11), 0, 0))
-    coins.push(new Coin(p.windowWidth + 50, p.windowWidth + 200, p.windowHeight - 100, 0, 35, 35, p.random(5, 11), 0, 0))
-
-    healthpack.push(new Health(p.windowWidth + 50, p.windowWidth + 200, p.windowHeight - 100, 0, 35, 35, p.random(5, 11), 0, 0))
 
     //Draw
     p.draw = function draw() {
@@ -233,7 +256,9 @@ const instance = new p5((p) => {
         p.text("GAME OVER", p.windowWidth / 2, p.windowHeight / 2)
         speed = 0
         if (space == true) {
-          location.reload()
+          
+          reset();
+
         }
       }
     }
