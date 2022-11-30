@@ -168,6 +168,7 @@ const instance = new p5((p) => {
 
     //Score
     let coin_item = 0
+    let highscore = 0
 
     //Variablen Klassen
     let obstacles: Obstacle[] = []
@@ -286,6 +287,9 @@ const instance = new p5((p) => {
 
         if (coin.coin_collect(Player_Position_Horizontal, Player_Position_Vertical, Player_Width, Player_height) == true) {
           coin_item = coin_item + 1
+          if (highscore < coin_item) {
+            highscore = highscore + 1
+          }
           coin.coin_randomizer()
         }
       }
@@ -323,10 +327,11 @@ const instance = new p5((p) => {
       //Text
       p.textFont("Calibri")
       p.fill(255, 255, 255)
-      p.textAlign(p.CENTER)
       p.textSize(45)
-      p.text("Lives: " + lives, p.windowWidth / 2 - 100, 50)
-      p.text("Score: " + coin_item, p.windowWidth / 2 + 100, 50)
+      p.textAlign(p.CENTER, p.CENTER)
+      p.text("Highscore: " + highscore + "    Lives: " + lives + "    Score: " + coin_item, p.windowWidth / 2, 50)
+      //p.text("Lives: " + lives, p.windowWidth / 2, 50)
+      //p.text("Score: " + coin_item, p.windowWidth / 2 + 200, 50)
 
       //Death
       if (lives < 1) {
