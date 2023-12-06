@@ -16,6 +16,20 @@ const instance = new p5((p) => {
   let soundvalue = 0
   let time = 0
 
+  //Score
+  let coin_item = 0
+  let highscore = 0
+
+  //Speed increase
+  let speedIncrease = coin_item / 4;//experimental
+
+
+  //Startscreen
+  let startScreen = true;
+
+  //Sound (for resetting sound on restart)
+  let soundRestart = false;
+
   //Preload
   p.preload = () => {
     maintheme = p.loadSound("src/maintheme.mp3", () => {
@@ -43,7 +57,7 @@ const instance = new p5((p) => {
       }
 
       execute_in_draw_2() {
-        this.x = this.x - this.obstacle_speed
+        this.x = this.x - this.obstacle_speed;//experimental
       }
 
       collide(player_x: number, player_y: number, player_w: number, player_h: number) {
@@ -166,10 +180,6 @@ const instance = new p5((p) => {
     //Deathscreen
     let space = false
 
-    //Score
-    let coin_item = 0
-    let highscore = 0
-
     //Variablen Klassen
     let obstacles: Obstacle[] = []
     let coins: Coin[] = []
@@ -179,7 +189,7 @@ const instance = new p5((p) => {
     p.setup = function setup() {
       p.frameRate(60);
       p.createCanvas(p.windowWidth, p.windowHeight);
-      p.reset();
+      //p.reset();
     }
 
     p.reset = function reset() {
@@ -192,10 +202,16 @@ const instance = new p5((p) => {
       up = false;
       space = false;
       coin_item = 0;
+      speedIncrease = 0;
       loopStart = 0;
       loopDuration = 3;
       soundvalue = 0;
+      if (soundRestart == true) {
+        maintheme.play();
+        soundRestart = false;
+      }
       time = 0;
+      startScreen = false;
 
       //remove all existing obstacles,coins,healthpacks by settings array length to 0
       obstacles.length = 0;
@@ -229,6 +245,7 @@ const instance = new p5((p) => {
         up = true
       if (p.keyCode === 32) {
         space = true
+        p.getAudioContext().resume();
       }
       if (p.keyCode === 49) {
         soundvalue = soundvalue + 1
@@ -255,7 +272,7 @@ const instance = new p5((p) => {
         time = time + 1
       }
 
-      //Sound
+      /*//Sound
       if (soundvalue == 0) {
         if (time < 300) {
           p.textAlign(p.CENTER)
@@ -265,7 +282,7 @@ const instance = new p5((p) => {
         }
       } else {
         p.getAudioContext().resume();
-      }
+      }*/
 
       //Damage Obstacle, Border
       for (const obstacle of obstacles) {
@@ -335,6 +352,26 @@ const instance = new p5((p) => {
 
       //Death
       if (lives < 1) {
+        if (startScreen == false) {
+          p.fill(0, 0, 0)
+          p.rect(0, 0, p.windowWidth, p.windowHeight)
+          p.textAlign(p.CENTER)
+          p.fill(255, 255, 255)
+          p.text("Press [Space] to continue", p.windowWidth / 2, p.windowHeight / 2 + 100)
+          p.fill(600, 50, 30)
+          p.textSize(90)
+          p.text("GAME OVER", p.windowWidth / 2, p.windowHeight / 2)
+          speed = 0
+          maintheme.pause();
+          soundRestart = true;
+          if (space == true) {
+            p.reset();
+          }
+        }
+      }
+
+      //Startscreen
+      if (startScreen == true) {
         p.fill(0, 0, 0)
         p.rect(0, 0, p.windowWidth, p.windowHeight)
         p.textAlign(p.CENTER)
@@ -342,7 +379,7 @@ const instance = new p5((p) => {
         p.text("Press [Space] to continue", p.windowWidth / 2, p.windowHeight / 2 + 100)
         p.fill(600, 50, 30)
         p.textSize(90)
-        p.text("GAME OVER", p.windowWidth / 2, p.windowHeight / 2)
+        p.text("START GAME", p.windowWidth / 2, p.windowHeight / 2)
         speed = 0
         if (space == true) {
           p.reset();
